@@ -16,7 +16,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 
+        repoURL: https://github.com/Kritik72/k8s-helm-config.git
         targetRevision: main
         path: apps/aws-java-project/chart
         helm:
