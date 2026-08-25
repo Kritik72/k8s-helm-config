@@ -1,0 +1,11 @@
+{{ .Chart.Name }} ({{ .Values.image.repository }}:{{ .Values.image.tag }}) deployed as {{ include "aws-java-project.fullname" . }} in namespace {{ .Release.Namespace }}.
+
+{{- if .Values.ingress.enabled }}
+Ingress hosts:
+{{- range .Values.ingress.hosts }}
+  http://{{ .host }}
+{{- end }}
+{{- else }}
+Access it inside the cluster at:
+  {{ include "aws-java-project.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
+{{- end }}

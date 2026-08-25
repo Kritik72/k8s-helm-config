@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aws-java-project
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          # Add a new environment by adding one entry here --
+          # it must have a matching apps/aws-java-project/envs/<env>/values.yaml file.
+          - env: dev
+  template:
+    metadata:
+      name: 'aws-java-project-{{env}}'
+    spec:
+      project: default
+      source:
+        repoURL: 
+        targetRevision: main
+        path: apps/aws-java-project/chart
+        helm:
+          valueFiles:
+            - ../envs/{{env}}/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{env}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

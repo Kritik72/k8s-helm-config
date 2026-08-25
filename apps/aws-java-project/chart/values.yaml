@@ -1,0 +1,95 @@
+# Default values for aws-java-project.
+# Per-environment overrides live in ../envs/<env>/values.yaml
+# and only need to set the keys that differ from these defaults.
+
+replicaCount: 1
+
+image:
+  repository: kritik78/aws-java-project
+  pullPolicy: IfNotPresent
+  # Overridden per-env / per-release. Never leave as "latest" for staging/prod.
+  tag: "latest"
+
+# Set this if the Docker Hub repo is private.
+# imagePullSecrets:
+#   - name: dockerhub-creds
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Plain (non-secret) env vars, injected via a ConfigMap + envFrom.
+# Add/remove keys freely -- no template changes needed.
+config: {}
+# SPRING_PROFILES_ACTIVE: dev
+# LOG_LEVEL: info
+
+# Secret env vars, injected via a Secret + envFrom.
+# Do NOT commit real secret values in plaintext here -- see README note
+# on sealed-secrets / external-secrets / ArgoCD Vault plugin.
+secret: {}
+# DB_PASSWORD: ""
+
+# Extra literal env vars (for values that need valueFrom, etc.)
+env: []
+# - name: JAVA_OPTS
+#   value: "-Xmx256m"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 10

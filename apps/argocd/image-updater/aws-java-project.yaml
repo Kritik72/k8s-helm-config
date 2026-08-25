@@ -1,0 +1,22 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: aws-java-project
+  namespace: argocd
+spec:
+  writeBackConfig:
+    method: "argocd"
+  applicationRefs:
+    - namePattern: "aws-java-project-{{env}}"
+      images:
+        - alias: "aws-java-project"
+          imageName: "kritik78/aws-java-project:{{env}}"
+          # Our chart's values.yaml uses image.repository/image.tag, not the
+          # tool's default image.name/image.tag -- must be mapped explicitly.
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+          commonUpdateSettings:
+            # "{{ env }}" is a floating tag -- track new pushes by digest, not semver.
+            updateStrategy: "digest"
