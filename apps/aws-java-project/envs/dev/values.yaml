@@ -23,7 +23,7 @@ resources:
     memory: 512Mi
 
 ingress:
-  enabled: true
+  enabled: false
   className: nginx
   hosts:
     - host: aws-java-project-dev.example.com
