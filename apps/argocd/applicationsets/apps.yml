@@ -4,6 +4,16 @@ metadata:
   name: aws-java-project
   namespace: argocd
 spec:
+  # Without this, the ApplicationSet controller re-templates the Application
+  # on every reconcile (it runs continuously) and wipes out the Helm
+  # parameter override that Argo CD Image Updater sets on the live
+  # Application to pin the resolved image digest -- the two fight, and the
+  # override never survives long enough to be synced. This tells the
+  # ApplicationSet controller to leave that one field alone once it's set
+  # out-of-band; nothing in git changes because of this.
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/source/helm/parameters
   generators:
     - list:
         elements:
@@ -37,5 +47,5 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{env}}'
       syncPolicy:
-        syncOptions:
+          syncOptions:
           - CreateNamespace=true
