@@ -1,0 +1,32 @@
+# stage overrides -- only keys that differ from chart/values.yaml go here.
+
+replicaCount: 2
+
+image:
+  repository: kritik78/aws-java-project
+  tag: "stage"
+
+config:
+  SPRING_PROFILES_ACTIVE: stage
+  LOG_LEVEL: debug
+  AWS_REGION: ap-south-1
+  AWS_SQS_QUEUE_URL: https://sqs.ap-south-1.amazonaws.com/924279027628/dev-sample-sqs
+  AWS_SNS_TOPIC_ARN: arn:aws:sns:ap-south-1:924279027628:dev-sample-sns
+  AWS_DYNAMODB_TABLE_NAME: dev-sample-table
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+ingress:
+  enabled: false
+  className: nginx
+  hosts:
+    - host: aws-java-project-dev.example.com
+      paths:
+        - path: /
+          pathType: Prefix

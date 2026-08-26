@@ -20,6 +20,7 @@ spec:
           # Add a new environment by adding one entry here --
           # it must have a matching apps/aws-java-project/envs/<env>/values.yaml file.
           - env: dev
+          - env: stage
   template:
     metadata:
       name: 'aws-java-project-{{env}}'
