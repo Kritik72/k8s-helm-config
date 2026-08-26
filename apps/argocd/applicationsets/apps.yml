@@ -13,11 +13,22 @@ spec:
   template:
     metadata:
       name: 'aws-java-project-{{env}}'
+      labels:
+        image-updater: aws-java-project
+      annotations:
+        # Argo CD Image Updater config, templated per environment -- adding a
+        # new `env` entry above is the only change needed; nothing in the
+        # ImageUpdater CR (apps/argocd/image-updater/aws-java-project.yaml)
+        # ever needs to change.
+        argocd-image-updater.argoproj.io/image-list: 'aws-java-project=kritik78/aws-java-project:{{env}}'
+        argocd-image-updater.argoproj.io/aws-java-project.update-strategy: digest
+        argocd-image-updater.argoproj.io/aws-java-project.helm.image-name: image.repository
+        argocd-image-updater.argoproj.io/aws-java-project.helm.image-tag: image.tag
     spec:
       project: default
       source:
         repoURL: https://github.com/Kritik72/k8s-helm-config.git
-        targetRevision: main
+        targetRevision: master
         path: apps/aws-java-project/chart
         helm:
           valueFiles:
