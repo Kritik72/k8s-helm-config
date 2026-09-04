@@ -31,7 +31,7 @@ spec:
         # new `env` entry above is the only change needed; nothing in the
         # ImageUpdater CR (apps/argocd/image-updater/aws-java-project.yaml)
         # ever needs to change.
-        argocd-image-updater.argoproj.io/image-list: 'aws-java-project=kritik78/aws-java-project:{{env}}'
+        argocd-image-updater.argoproj.io/image-list: '924279027628.dkr.ecr.ap-south-1.amazonaws.com/aws-java-project:{{env}}'
         argocd-image-updater.argoproj.io/aws-java-project.update-strategy: digest
         argocd-image-updater.argoproj.io/aws-java-project.helm.image-name: image.repository
         argocd-image-updater.argoproj.io/aws-java-project.helm.image-tag: image.tag

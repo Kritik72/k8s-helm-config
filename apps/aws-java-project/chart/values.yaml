@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: kritik78/aws-java-project
+  repository: 924279027628.dkr.ecr.ap-south-1.amazonaws.com/aws-java-project
   pullPolicy: IfNotPresent
   # Overridden per-env / per-release. Never leave as "latest" for staging/prod.
   tag: "latest"

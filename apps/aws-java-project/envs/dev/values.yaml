@@ -3,7 +3,7 @@
 replicaCount: 1
 
 image:
-  repository: kritik78/aws-java-project
+  repository: 924279027628.dkr.ecr.ap-south-1.amazonaws.com/aws-java-project
   tag: "dev"
 
 config:
