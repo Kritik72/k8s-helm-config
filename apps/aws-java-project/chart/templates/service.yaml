@@ -11,5 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.managementPort }}
+      targetPort: actuator
+      protocol: TCP
+      name: actuator
   selector:
     {{- include "aws-java-project.selectorLabels" . | nindent 4 }}

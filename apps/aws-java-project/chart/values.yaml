@@ -34,6 +34,10 @@ service:
   port: 80
   targetPort: 8080
 
+# Actuator (health, metrics, prometheus) runs on its own port, separate from
+# app traffic -- see management.server.port in the app's application.yml.
+managementPort: 8081
+
 ingress:
   enabled: false
   className: ""
@@ -83,13 +87,13 @@ env: []
 livenessProbe:
   httpGet:
     path: /actuator/health/liveness
-    port: http
+    port: actuator
   initialDelaySeconds: 30
   periodSeconds: 10
 
 readinessProbe:
   httpGet:
     path: /actuator/health/readiness
-    port: http
+    port: actuator
   initialDelaySeconds: 15
   periodSeconds: 10

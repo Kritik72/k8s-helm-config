@@ -44,6 +44,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
+            - name: actuator
+              containerPort: {{ .Values.managementPort }}
+              protocol: TCP
           {{- if or .Values.config .Values.secret }}
           envFrom:
             {{- if .Values.config }}

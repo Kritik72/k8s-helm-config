@@ -3,8 +3,14 @@
 replicaCount: 1
 
 image:
-  repository: 924279027628.dkr.ecr.ap-south-1.amazonaws.com/aws-java-project
-  tag: "dev"
+  # Local-only override: the ECR repo doesn't exist yet, so this points at
+  # the image built+loaded into kind via `kind load docker-image` instead.
+  # Revert to the ECR repository below once a real image is pushed there.
+  repository: aws-java-project
+  tag: "local"
+  pullPolicy: Never
+  # repository: 924279027628.dkr.ecr.ap-south-1.amazonaws.com/aws-java-project
+  # tag: "dev"
 
 config:
   SPRING_PROFILES_ACTIVE: dev
