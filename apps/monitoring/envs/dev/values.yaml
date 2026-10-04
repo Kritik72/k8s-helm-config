@@ -1,0 +1,8 @@
+# dev overrides -- only keys that differ from chart/values.yaml go here.
+
+kube-prometheus-stack:
+  grafana:
+    adminPassword: "changeme-dev"   # replace before applying; see secrets note above
+  prometheus:
+    prometheusSpec:
+      retention: 3d   # shorter retention for a throwaway dev/local environment
