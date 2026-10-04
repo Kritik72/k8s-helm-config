@@ -1,0 +1,19 @@
+{{- if .Values.keda.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "aws-java-project.fullname" . }}-rps
+  namespace: {{ .Release.Namespace }}
+spec:
+  scaleTargetRef:
+    name: {{ include "aws-java-project.fullname" . }}
+  minReplicaCount: {{ .Values.keda.minReplicas }}
+  maxReplicaCount: {{ .Values.keda.maxReplicas }}
+  cooldownPeriod: 60
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus.monitoring-raw.svc.cluster.local:9090
+        query: sum(rate(http_server_requests_seconds_count{application="aws-java-project", namespace="{{ .Release.Namespace }}"}[2m]))
+        threshold: "{{ .Values.keda.threshold }}"
+{{- end }}

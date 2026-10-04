@@ -41,3 +41,9 @@ podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/port: "8081"
   prometheus.io/path: "/actuator/prometheus"
+
+keda:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  threshold: "10"
